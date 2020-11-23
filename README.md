@@ -35,8 +35,11 @@ Om naar de consul web ui te surfen moet het volgende commando uitgevoerd worden 
 
 ```bash
 	$ vagrant ssh web -- -L 8500:localhost:8500
+
+    $ vagrant ssh web -- -L 4646:localhost:4646
 ```
 Vervolgens in een browser [localhost:8500] (http://localhost:8500) intypen.
+Vervolgens in een browser [localhost:46465] (http://localhost:4646) intypen.
 
 Bronnen
 https://docs.docker.com/engine/install/centos/  

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#NOMAD
+sudo sed -i '/bind_addr/c\bind_addr = "{{ GetInterfaceIP \\"eth1\\" }}"' /etc/nomad.d/nomad.hcl
+
+sudo systemctl enable nomad 
+sudo systemctl restart nomad 
+sudo systemctl start nomad
+
+

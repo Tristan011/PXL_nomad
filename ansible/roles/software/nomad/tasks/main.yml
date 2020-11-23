@@ -1,0 +1,23 @@
+---
+- name: Add Nomad repo
+  get_url:
+    url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+    dest: /etc/yum.repos.d/hashicorp.repo
+    become: yes
+
+- name: Install Nomad
+  yum:
+    name: nomad
+    state: installed
+  notify: restart nomad
+
+#https://docs.ansible.com/ansible/2.4/lineinfile_module.html
+#- name: nomadbindaddress
+ # lineinfile:
+  #  path: /tmp/testfile
+   # line: '192.168.1.99 foo.lab.net foo'
+- name: nomadBindaddr
+  lineinfile:
+    path: /etc/nomad.d/nomad.hcl
+    regexp: '^bind_addr'
+    line: 'bind_addr = "{{ GetInterfaceIP \\"eth1\\" }}"'
