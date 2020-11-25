@@ -1,9 +1,10 @@
 ---
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/yum_repository_module.html
 - name: Add Nomad repo
-  get_url:
-    url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
-    dest: /etc/yum.repos.d/hashicorp.repo
-    become: yes
+  yum_repository:
+    name: nomad
+    description: Hashicorp repo voor nomad
+    baseurl: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
 
 - name: Install Nomad
   yum:
