@@ -1,14 +1,44 @@
 ---
-- name: Add Docker repo
-  yum_repository:
-    name: docker
-    description: docker repo
-    baseurl: https://download.docker.com/linux/centos/docker-ce.repo
+- name: Remove docker if installed from CentOS repo
+  yum:
+    name:
+      - docker
+      - docker-client
+      - docker-client-latest
+      - docker-common
+      - docker-latest
+      - docker-latest-logrotate
+      - docker-logrotate
+      - docker-engine
+    state: removed
+
+- name: Install device-mapper-persistent-data
+  yum:
+    name: device-mapper-persistent-data
+    state: latest
+
+- name: Install lvm2
+  yum:
+    name: lvm2
+    state: latest
+  
+# - name: Add Docker repo
+#   yum_repository:
+#     name: docker-ce
+#     description: docker-ce repo
+#     baseurl: https://download.docker.com/linux/centos/docker-ce.repo
+#     enabled: yes
+
+# - name: Add Docker repo
+#       get_url:
+#         url: https://download.docker.com/linux/centos/docker-ce.repo
+#         dest: /etc/yum.repos.d/docer-ce.repo
+#       become: yes
+
 
 - name: Install Docker
   yum:
-    name: docker
-    state: installed
-  notify: restart docker
+    name: https://download.docker.com/linux/centos/docker-ce.repo
+    state: present
 
 
