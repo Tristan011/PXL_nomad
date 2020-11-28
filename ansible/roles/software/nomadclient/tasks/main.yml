@@ -1,5 +1,5 @@
 ---
-- name: Add nomad repository.
+- name: Add nomad repository
   get_url:
     url: "{{ nomad_yum_repo_url }}"
     dest: '/etc/yum.repos.d/nomad-ce.repo'
@@ -7,23 +7,49 @@
     group: root
     mode: 0644
 
-- name: Install nomad.
+- name: Install nomad
   package:
     name: "{{ nomad_package }}"
     state: "{{ nomad_package_state }}"
   notify: restart nomad
 
+######################
+# Configuratie files #
+######################
 - name: nomadBindaddr
   replace:
     path: /etc/nomad.d/nomad.hcl
     regexp: "{{ nomad_bindaddreplace }}" 
     replace: "{{ nomad_bindaddr }}" 
 
-- name: nomadServerAddr
+- name: nomadServerAddr # https://stackoverflow.com/questions/57503456/replace-specific-string-in-yaml-file-using-ansible
+  lineinfile:
+    path: /etc/nomad.d/nomad.hcl
+    regexp: "{{ nomad_serveraddrreplace }}"
+    line: "{{ nomad_serveraddr }}"
+
+# Multi line configuratie
+- name: nomadNotServer
   replace:
     path: /etc/nomad.d/nomad.hcl
-    regexp: "{{ nomad_bindaddreplace }}" 
-    replace: "{{ nomad_bindaddr }}" 
+    regexp: |-
+      server {
+        enabled = true
+    replace: |-
+      server {
+        enabled = false
+
+# - name: nomadServerAddr
+#   replace:
+#     path: /etc/nomad.d/nomad.hcl
+#     regexp: |-
+#       client {
+#         enabled = true
+#         servers = [\"127.0.0.1:4646\"]
+#     replace: |-
+#       client {
+#         enabled = true
+#         servers = [\"192.168.1.4:4646\"]
 # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/yum_repository_module.html
 # - name: Add Nomad repo
 #   yum_repository:
