@@ -11,7 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define :server do |server|
     server.vm.hostname = "server"
-    server.vm.network "private_network", ip: "10.0.0.10"
+    server.vm.network "private_network", ip: "192.168.1.4"
 
     server.vm.provision "ansible" do |ansible|
       ansible.config_file = "ansible/ansible.cfg"
@@ -27,5 +27,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
 
  end
-
+    (1..2).each do |i|
+		    config.vm.define "client#{i}" do |client|
+			    client.vm.hostname = "client#{i}"
+			    client.vm.network "private_network", ip: "192.168.1.#{i+4}"
+			    client.vm.provision "ansible" do |ansible|
+          ansible.config_file = "ansible/ansible.cfg"
+          ansible.playbook = "ansible/plays/client.yml"	
+          ansible.groups = {
+            "clients" => ["client#{i}"], }	
+			  end
+    end
+  end
 end
