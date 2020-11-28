@@ -1,1 +1,13 @@
 ---
+nomad_package: "nomad"
+nomad_package_state: present
+
+nomad_service_state: started
+nomad_service_enabled: true
+
+nomad_yum_repo_url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo # https://rpm.releases.hashicorp.com/$release/hashicorp.repo (Where $release is “RHEL”, “AmazonLinux”, or “fedora”)
+#nomad_yum_gpg_key: https://download.nomad.com/linux/centos/gpg
+
+
+nomad_bindaddreplace: bind_addr = "0.0.0.0" 
+nomad_bindaddr: bind_addr = "{{ GetInterfaceIP \\"eth1\\" }}" 

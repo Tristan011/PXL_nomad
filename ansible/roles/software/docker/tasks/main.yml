@@ -1,26 +1,26 @@
 ---
-- name: Remove docker if installed from CentOS repo
-  yum:
-    name:
-      - docker
-      - docker-client
-      - docker-client-latest
-      - docker-common
-      - docker-latest
-      - docker-latest-logrotate
-      - docker-logrotate
-      - docker-engine
-    state: removed
+# - name: Remove docker if installed from CentOS repo
+#   yum:
+#     name:
+#       - docker
+#       - docker-client
+#       - docker-client-latest
+#       - docker-common
+#       - docker-latest
+#       - docker-latest-logrotate
+#       - docker-logrotate
+#       - docker-engine
+#     state: removed
 
-- name: Install device-mapper-persistent-data
-  yum:
-    name: device-mapper-persistent-data
-    state: latest
+# - name: Install device-mapper-persistent-data
+#   yum:
+#     name: device-mapper-persistent-data
+#     state: latest
 
-- name: Install lvm2
-  yum:
-    name: lvm2
-    state: latest
+# - name: Install lvm2
+#   yum:
+#     name: lvm2
+#     state: latest
   
 # - name: Add Docker repo
 #   yum_repository:
@@ -36,9 +36,35 @@
 #       become: yes
 
 
-- name: Install Docker
-  yum:
-    name: https://download.docker.com/linux/centos/docker-ce.repo
+# - name: Install Docker
+#   yum:
+#     name: https://download.docker.com/linux/centos/docker-ce.repo
+#     state: present
+
+
+- name: Ensure old versions of Docker are not installed.
+  package:
+    name:
+      - docker
+      - docker-common
+      - docker-engine
+    state: absent
+
+- name: Add Docker GPG key.
+  rpm_key:
+    key: "{{ docker_yum_gpg_key }}"
     state: present
 
+- name: Add Docker repository.
+  get_url:
+    url: "{{ docker_yum_repo_url }}"
+    dest: '/etc/yum.repos.d/docker-ce.repo'
+    owner: root
+    group: root
+    mode: 0644
 
+- name: Install Docker.
+  package:
+    name: "{{ docker_package }}"
+    state: "{{ docker_package_state }}"
+  notify: restart docker

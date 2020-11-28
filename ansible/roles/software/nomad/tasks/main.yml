@@ -1,15 +1,29 @@
 ---
 # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/yum_repository_module.html
-- name: Add Nomad repo
-  yum_repository:
-    name: nomad
-    description: Hashicorp repo voor nomad
-    baseurl: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+# - name: Add Nomad repo
+#   yum_repository:
+#     name: nomad
+#     description: Hashicorp repo voor nomad
+#     baseurl: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
 
-- name: Install Nomad
-  yum:
-    name: nomad
-    state: installed
+# - name: Install Nomad
+#   yum:
+#     name: nomad
+#     state: installed
+#   notify: restart nomad
+
+- name: Add nomad repository.
+  get_url:
+    url: "{{ nomad_yum_repo_url }}"
+    dest: '/etc/yum.repos.d/nomad-ce.repo'
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install nomad.
+  package:
+    name: "{{ nomad_package }}"
+    state: "{{ nomad_package_state }}"
   notify: restart nomad
 
 #https://docs.ansible.com/ansible/2.4/lineinfile_module.html
@@ -19,6 +33,8 @@
    # line: '192.168.1.99 foo.lab.net foo'
 - name: nomadBindaddr
   lineinfile:
-    path: /etc/nomad.d/nomad.hcl
-    regexp: '^bind_addr'
-    line: 'bind_addr = "{{ GetInterfaceIP \\"eth1\\" }}"'
+    dest: '/etc/nomad.d/nomad.hcl'
+    regexp: "{{ nomad_bindaddreplace }}" 
+    line: "{{ nomad_bindaddr }}" 
+    state: present
+    mode: 0644
