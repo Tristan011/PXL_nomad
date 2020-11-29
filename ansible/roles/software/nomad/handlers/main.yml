@@ -1,6 +1,6 @@
 ---
 
-- name: restart nomad
+- name: enable nomad
   service:
     name: nomad
     state: enable
