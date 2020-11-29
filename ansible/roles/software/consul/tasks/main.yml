@@ -1,0 +1,37 @@
+---
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/yum_repository_module.html
+# - name: Add consul repo
+#   yum_repository:
+#     name: consul
+#     description: Hashicorp repo voor consul
+#     baseurl: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+
+# - name: Install consul
+#   yum:
+#     name: consul
+#     state: installed
+#   notify: restart consul
+
+- name: Add consul repository.
+  get_url:
+    url: "{{ consul_yum_repo_url }}"
+    dest: '/etc/yum.repos.d/consul-ce.repo'
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install consul.
+  package:
+    name: "{{ consul_package }}"
+    state: "{{ consul_package_state }}"
+  notify: restart consul
+
+#https://docs.ansible.com/ansible/2.4/lineinfile_module.html
+#- name: consulbindaddress
+ # lineinfile:
+  #  path: /tmp/testfile
+   # line: '192.168.1.99 foo.lab.net foo'
+- name: consulBindaddr
+  lineinfile:
+    path: /etc/consul.d/consul.hcl
+    line: "{{ consul_bindaddr }}" 

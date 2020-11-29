@@ -1,4 +1,10 @@
 ---
+
+- name: restart nomad
+  service:
+    name: nomad
+    state: enable
+
 - name: restart nomad
   service:
     name: nomad

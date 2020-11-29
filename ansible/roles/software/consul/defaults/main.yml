@@ -1,0 +1,14 @@
+---
+consul_package: "consul"
+consul_package_state: present
+
+consul_service_state: started
+consul_service_enabled: true
+
+consul_yum_repo_url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo # https://rpm.releases.hashicorp.com/$release/hashicorp.repo (Where $release is “RHEL”, “AmazonLinux”, or “fedora”)
+#consul_yum_gpg_key: https://download.consul.com/linux/centos/gpg
+
+
+# Variables to replace in configuratie files
+consul_bindaddreplace: bind_addr = "0.0.0.0" 
+consul_bindaddr: !unsafe bind_addr = "{{ GetInterfaceIP //"eth1//" }}"
