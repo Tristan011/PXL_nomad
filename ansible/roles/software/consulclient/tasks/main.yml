@@ -24,7 +24,6 @@
   package:
     name: "{{ consul_package }}"
     state: "{{ consul_package_state }}"
-  notify: restart consul
 
 #https://docs.ansible.com/ansible/2.4/lineinfile_module.html
 #- name: consulbindaddress
@@ -36,20 +35,10 @@
     path: /etc/consul.d/consul.hcl
     line: "{{ consul_bindaddr }}"
 
-- name: consulServerEnable # https://stackoverflow.com/questions/57503456/replace-specific-string-in-yaml-file-using-ansible
-  lineinfile:
-    path: /etc/consul.d/consul.hcl
-    regexp: "{{ consul_serverEnable }}"
-    line: "{{ consul_server }}" 
-
 - name: consulRetryJoin
   lineinfile:
     path: /etc/consul.d/consul.hcl
     line: "{{ consul_retryjoin }}"
+   notify: restart consul
 
-- name: consulBootstrap
-  lineinfile:
-    path: /etc/consul.d/consul.hcl
-    regexp: "{{ consul_bootstrap_regexp}}"
-    line: "{{ consul_bootstrap}}"
     

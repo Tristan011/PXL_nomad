@@ -5,5 +5,5 @@
   roles:
     - role: software/crond
     - role: software/docker
-    #- role: software/consulclient
+    - role: software/consulclient
     - role: software/nomadclient

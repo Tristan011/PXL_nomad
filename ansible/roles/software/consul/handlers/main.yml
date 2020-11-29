@@ -1,9 +1,4 @@
 ---
-- name: enable consul
-  service:
-    name: consul
-    state: enable
-
 - name: restart consul
   service:
     name: consul

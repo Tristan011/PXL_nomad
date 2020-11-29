@@ -11,7 +11,6 @@
   package:
     name: "{{ nomad_package }}"
     state: "{{ nomad_package_state }}"
-  notify: restart nomad
 
 ######################
 # Configuratie files #
@@ -38,7 +37,7 @@
     replace: |-
       server {
         enabled = false
-
+  notify: restart nomad
 # - name: nomadServerAddr
 #   replace:
 #     path: /etc/nomad.d/nomad.hcl

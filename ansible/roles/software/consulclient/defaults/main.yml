@@ -10,11 +10,6 @@ consul_yum_repo_url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo # ht
 
 
 # Variables to replace in configuratie files
-consul_bindaddreplace: bind_addr = "0.0.0.0" 
-consul_bindaddr: !unsafe bind_addr = "{{ GetInterfaceIP //"eth1//" }}"
+consul_bindaddr: !unsafe bind_addr = "{{ GetInterfaceIP \"eth1\" }}"
 
 consul_retryjoin: retry_join=["192.168.1.4"]
-consul_serverEnable: ^#server = true
-consul_server: server = true
-consul_bootstrap_regexp: ^#bootstrap_expect
-consul_bootstrap: bootstrap_expect=1

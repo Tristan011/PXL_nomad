@@ -24,7 +24,6 @@
   package:
     name: "{{ nomad_package }}"
     state: "{{ nomad_package_state }}"
-  notify: restart nomad
 
 #https://docs.ansible.com/ansible/2.4/lineinfile_module.html
 #- name: nomadbindaddress
@@ -36,3 +35,4 @@
     path: /etc/nomad.d/nomad.hcl
     regexp: "{{ nomad_bindaddreplace }}" 
     replace: "{{ nomad_bindaddr }}" 
+  notify: restart nomad
