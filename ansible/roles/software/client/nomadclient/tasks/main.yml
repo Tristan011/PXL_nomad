@@ -13,16 +13,13 @@
     state: "{{ nomad_package_state }}"
   notify: enable nomad
 
-######################
-# Configuratie files #
-######################
 - name: nomadBindaddr
   replace:
     path: /etc/nomad.d/nomad.hcl
     regexp: "{{ nomad_bindaddreplace }}" 
     replace: "{{ nomad_bindaddr }}" 
 
-- name: nomadServerAddr # https://stackoverflow.com/questions/57503456/replace-specific-string-in-yaml-file-using-ansible
+- name: nomadServerAddr
   lineinfile:
     path: /etc/nomad.d/nomad.hcl
     regexp: "{{ nomad_serveraddrreplace }}"
@@ -39,32 +36,3 @@
       server {
         enabled = false
   notify: restart nomad
-# - name: nomadServerAddr
-#   replace:
-#     path: /etc/nomad.d/nomad.hcl
-#     regexp: |-
-#       client {
-#         enabled = true
-#         servers = [\"127.0.0.1:4646\"]
-#     replace: |-
-#       client {
-#         enabled = true
-#         servers = [\"192.168.1.4:4646\"]
-# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/yum_repository_module.html
-# - name: Add Nomad repo
-#   yum_repository:
-#     name: nomad
-#     description: Hashicorp repo voor nomad
-#     baseurl: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
-
-# - name: Install Nomad
-#   yum:
-#     name: nomad
-#     state: installed
-#   notify: restart nomad
-
-#https://docs.ansible.com/ansible/2.4/lineinfile_module.html
-#- name: nomadbindaddress
- # lineinfile:
-  #  path: /tmp/testfile
-   # line: '192.168.1.99 foo.lab.net foo'

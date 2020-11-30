@@ -1,17 +1,4 @@
 ---
-# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/yum_repository_module.html
-# - name: Add Nomad repo
-#   yum_repository:
-#     name: nomad
-#     description: Hashicorp repo voor nomad
-#     baseurl: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
-
-# - name: Install Nomad
-#   yum:
-#     name: nomad
-#     state: installed
-#   notify: restart nomad
-
 - name: Add nomad repository.
   get_url:
     url: "{{ nomad_yum_repo_url }}"
@@ -26,20 +13,24 @@
     state: "{{ nomad_package_state }}"
   notify: enable nomad
 
-#https://docs.ansible.com/ansible/2.4/lineinfile_module.html
-#- name: nomadbindaddress
- # lineinfile:
-  #  path: /tmp/testfile
-   # line: '192.168.1.99 foo.lab.net foo'
-- name: nomadBindaddr
-  replace:
+- name: nomadAdvertise
+  lineinfile:
     path: /etc/nomad.d/nomad.hcl
-    regexp: "{{ nomad_bindaddreplace }}" 
-    replace: "{{ nomad_bindaddr }}" 
+    line: |-
+      advertise {
+        http = "{{ nomad_bindaddr }}"
+        rpc = "{{ nomad_bindaddr }}"
+        serf = "{{ nomad_bindaddr }}"
+      }
   notify: restart nomad
 
-# - name: nomadBindaddr
-#   lineinfile:
-#     path: /etc/consul.d/consul.hcl
-#     line: export NOMAD_ADDR=http://192.168.100.12:4646 
-#     "{{ consul_bindaddr }}"
+# Bindaddr zorgde ervool dat nomad ui NIET werkte
+# - name: nomadBindaddr 
+#   replace:
+#     path: /etc/nomad.d/nomad.hcl
+#     regexp: "{{ nomad_bindaddreplace }}" 
+#     replace: "{{ nomad_bindaddr }}" 
+#   notify: restart nomad
+
+# - name: nomad 127.0.0.1 connection refused
+#   shell: export NOMAD_ADDR=http://192.168.1.4:4646
