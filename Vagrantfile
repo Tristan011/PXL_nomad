@@ -9,7 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vbguest.auto_update = false
   config.vm.box = "centos/7"
 
-  config.vm.define :server do |server|
+  config.vm.define :server do |server|4
     server.vm.hostname = "server"
     server.vm.network "private_network", ip: "192.168.1.4", virtualbox_intnet:"mynetwork"
     server.vm.network "forwarded_port", guest: 8500, host: 80 # https://www.vagrantup.com/docs/networking/basic_usage
@@ -17,7 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     server.vm.provision "ansible" do |ansible|
       ansible.config_file = "ansible/ansible.cfg"
-      ansible.playbook = "ansible/plays/cluster.yml"
+      ansible.playbook = "ansible/plays/server.yml"
       ansible.groups = {
         "servers" => ["server"],
 #        "servers:vars" => {"crond__content" => "servers_value"}
@@ -35,7 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			    client.vm.network "private_network", ip: "192.168.1.#{i+4}", virtualbox_intnet:"mynetwork"
 			    client.vm.provision "ansible" do |ansible|
           ansible.config_file = "ansible/ansible.cfg"
-          ansible.playbook = "ansible/plays/cluster.yml"	
+          ansible.playbook = "ansible/plays/client.yml"	
           ansible.groups = {
             "clients" => ["client#{i}"], }	
 			  end
