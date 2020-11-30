@@ -10,5 +10,6 @@ nomad_yum_repo_url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo # htt
 
 
 # Variables to replace in configuratie files
-nomad_bindaddreplace: bind_addr = "0.0.0.0" 
-nomad_bindaddr: !unsafe bind_addr = "{{ GetInterfaceIP \"eth1\" }}"
+
+#nomad_bindaddreplace: bind_addr = "0.0.0.0" 
+#nomad_bindaddr: !unsafe bind_addr = "{{ GetInterfaceIP \"eth1\" }}"
