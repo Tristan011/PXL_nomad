@@ -31,12 +31,16 @@ Dus met het volgende commando's kan men op de server of clients:
     $ vagrant ssh {$name}
 ```
 
+```bash
+    $ export NOMAD_ADDR=http://192.168.1.4:4646
+```
+
 Om naar de consul web ui te surfen moet het volgende commando uitgevoerd worden voor port forwarding:
 
 ```bash
-	$ vagrant ssh web -- -L 8500:localhost:8500
+	$ vagrant ssh server -- -L 8500:localhost:8500
 
-    $ vagrant ssh web -- -L 4646:localhost:4646
+    $ vagrant ssh server -- -L 4646:localhost:4646
 ```
 Vervolgens in een browser [localhost:8500] (http://localhost:8500) intypen.
 Vervolgens in een browser [localhost:46465] (http://localhost:4646) intypen.

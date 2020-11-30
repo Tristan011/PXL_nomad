@@ -11,11 +11,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define :server do |server|
     server.vm.hostname = "server"
-    server.vm.network "private_network", ip: "192.168.1.4"
+    server.vm.network "private_network", ip: "192.168.1.4", virtualbox_intnet:"mynetwork"
+    server.vm.network "forwarded_port", guest: 8500, host: 80 # https://www.vagrantup.com/docs/networking/basic_usage
+    server.vm.network "forwarded_port", guest: 4646, host: 4646
 
     server.vm.provision "ansible" do |ansible|
       ansible.config_file = "ansible/ansible.cfg"
-      ansible.playbook = "ansible/plays/server.yml"
+      ansible.playbook = "ansible/plays/cluster.yml"
       ansible.groups = {
         "servers" => ["server"],
 #        "servers:vars" => {"crond__content" => "servers_value"}
@@ -30,10 +32,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     (1..2).each do |i|
 		    config.vm.define "client#{i}" do |client|
 			    client.vm.hostname = "client#{i}"
-			    client.vm.network "private_network", ip: "192.168.1.#{i+4}"
+			    client.vm.network "private_network", ip: "192.168.1.#{i+4}", virtualbox_intnet:"mynetwork"
 			    client.vm.provision "ansible" do |ansible|
           ansible.config_file = "ansible/ansible.cfg"
-          ansible.playbook = "ansible/plays/client.yml"	
+          ansible.playbook = "ansible/plays/cluster.yml"	
           ansible.groups = {
             "clients" => ["client#{i}"], }	
 			  end

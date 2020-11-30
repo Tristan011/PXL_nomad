@@ -24,6 +24,7 @@
   package:
     name: "{{ nomad_package }}"
     state: "{{ nomad_package_state }}"
+  notify: enable nomad
 
 #https://docs.ansible.com/ansible/2.4/lineinfile_module.html
 #- name: nomadbindaddress
@@ -36,3 +37,9 @@
     regexp: "{{ nomad_bindaddreplace }}" 
     replace: "{{ nomad_bindaddr }}" 
   notify: restart nomad
+
+# - name: nomadBindaddr
+#   lineinfile:
+#     path: /etc/consul.d/consul.hcl
+#     line: export NOMAD_ADDR=http://192.168.100.12:4646 
+#     "{{ consul_bindaddr }}"

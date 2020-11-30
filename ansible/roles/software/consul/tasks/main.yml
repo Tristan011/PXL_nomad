@@ -24,6 +24,7 @@
   package:
     name: "{{ consul_package }}"
     state: "{{ consul_package_state }}"
+  notify: enable consul
 
 #https://docs.ansible.com/ansible/2.4/lineinfile_module.html
 #- name: consulbindaddress

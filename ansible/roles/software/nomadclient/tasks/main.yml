@@ -11,6 +11,7 @@
   package:
     name: "{{ nomad_package }}"
     state: "{{ nomad_package_state }}"
+  notify: enable nomad
 
 ######################
 # Configuratie files #

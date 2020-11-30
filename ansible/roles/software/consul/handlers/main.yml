@@ -3,3 +3,7 @@
   service:
     name: consul
     state: restarted
+- name: enable consul
+  service:
+    name: consul
+    enabled: yes

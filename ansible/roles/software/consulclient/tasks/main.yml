@@ -24,7 +24,7 @@
   package:
     name: "{{ consul_package }}"
     state: "{{ consul_package_state }}"
-
+  notify: enable consul
 #https://docs.ansible.com/ansible/2.4/lineinfile_module.html
 #- name: consulbindaddress
  # lineinfile:
@@ -39,6 +39,6 @@
   lineinfile:
     path: /etc/consul.d/consul.hcl
     line: "{{ consul_retryjoin }}"
-   notify: restart consul
+  notify: restart consul
 
     

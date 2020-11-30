@@ -3,3 +3,7 @@
   service:
     name: nomad
     state: restarted
+- name: enable nomad
+  service:
+    name: nomad
+    enabled: yes
