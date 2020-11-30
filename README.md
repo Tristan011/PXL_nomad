@@ -33,7 +33,7 @@ Dus met het volgende commando's kan men op de server of clients:
 
 Om naar de consul web ui te surfen moet naar [localhost] (http://localhost:80) gesurft worden. 
 Om naar de nomad web ui te surfen moet naar [localhost:4646] (http://localhost:4646) gesurft worden. 
-Manueel kan via port forwarding kan het volgende commando uitgevoerd worden:
+Manueel kan via port forwarding het volgende commando uitgevoerd worden:
 
 ```bash
 	$ vagrant ssh server -- -L 8500:localhost:8500
@@ -56,5 +56,7 @@ https://docs.ansible.com/ansible/latest/collections/ansible/builtin/lineinfile_m
 https://stackoverflow.com/questions/57503456/replace-specific-string-in-yaml-file-using-ansible
 https://serverfault.com/questions/966428/ansible-replace-regex-replace-span-multiple-lines
 https://www.mydailytutorials.com/ansible-replace-example/
+https://github.com/geerlingguy/ansible-role-docker/tree/master/tasks
+
 
 
