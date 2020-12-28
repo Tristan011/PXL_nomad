@@ -6,8 +6,8 @@
 
 datacenter = "dc1",
 client_addr = "0.0.0.0",
-"{{ consul_bindaddr }}"
-#bind_addr = "{{ ansible_eth1.ipv4.address }}",
+#"{{ consul_bindaddr }}"
+bind_addr = "{{ ansible_eth1.ipv4.address }}",
 rejoin_after_leave = true,
 ui = true,
 
@@ -17,7 +17,6 @@ bootstrap_expect = {{ groups['servers'] | length }},
 
 {% if consul_join == "yes" %}
 start_join = [ "192.168.1.4" ],
-"{{ consul_retryjoin }}"
 {% endif %}
 
 data_dir = "/opt/consul/",

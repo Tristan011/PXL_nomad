@@ -18,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     server.vm.provision "ansible" do |ansible|
       ansible.config_file = "ansible/ansible.cfg"
-      ansible.playbook = "ansible/plays/playbook.yml"
+      ansible.playbook = "ansible/plays/servers.yml"
       ansible.groups = {
         "servers" => ["server"],
         "servers:vars" => {"consul_master" => "yes", "consul_join" => "no", "consul_server"=> "yes", "nomad_master" => "yes", "nomad_server" => "yes"}
@@ -36,7 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			    client.vm.network "private_network", ip: "192.168.1.#{i+4}", virtualbox_intnet:"mynetwork"
 			    client.vm.provision "ansible" do |ansible|
           ansible.config_file = "ansible/ansible.cfg"
-          ansible.playbook = "ansible/plays/playbook.yml"	
+          ansible.playbook = "ansible/plays/clients.yml"	
           ansible.groups = {
             "clients" => ["client#{i}"],	
             "clients:vars" => {"consul_master" => "no", "consul_join" => "yes", "consul_server"=> "no", "nomad_master" => "no", "nomad_server" => "no"}

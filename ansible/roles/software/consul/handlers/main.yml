@@ -7,3 +7,4 @@
   service:
     name: consul
     enabled: yes
+  become: yes
