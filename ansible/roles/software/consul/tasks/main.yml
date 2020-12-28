@@ -11,11 +11,12 @@
   package:
     name: "{{ consul_package }}"
     state: "{{ consul_package_state }}"
-  notify: enable consul
+  notify: restart consul
 
 - name: Template consul.hcl
   template:
     src: consul.hcl.j2
     dest: /etc/consul.d/consul.hcl
+  notify: restart consul
 
     

@@ -18,6 +18,14 @@ nomadadvertise: |-
         serf = "192.168.1.4"
       }
 
+nomadtelemetry: |-
+      telemetry {
+        collection_interval = "5s",
+        publish_allocation_metrics = true,
+        publish_node_metrics = true,
+        prometheus_metrics = true
+      }
+
 
 #nomad_bindaddreplace: bind_addr = "0.0.0.0" 
 #nomad_bindaddr: !unsafe bind_addr = "{{ GetInterfaceIP \"eth1\" }}"

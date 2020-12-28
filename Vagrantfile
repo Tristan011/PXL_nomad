@@ -21,7 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.playbook = "ansible/plays/servers.yml"
       ansible.groups = {
         "servers" => ["server"],
-        "servers:vars" => {"consul_master" => "yes", "consul_join" => "no", "consul_server"=> "yes", "nomad_master" => "yes", "nomad_server" => "yes"}
+        "servers:vars" => {"consul_client" => "no", "consul_server"=> "yes", "nomad_master" => "yes", "nomad_server" => "yes"}
       }
       ansible.host_vars = {
 #        "server" => {"crond__content" => "server_value"}
@@ -39,7 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           ansible.playbook = "ansible/plays/clients.yml"	
           ansible.groups = {
             "clients" => ["client#{i}"],	
-            "clients:vars" => {"consul_master" => "no", "consul_join" => "yes", "consul_server"=> "no", "nomad_master" => "no", "nomad_server" => "no"}
+            "clients:vars" => {"consul_client" => "yes", "consul_server"=> "no", "nomad_master" => "no", "nomad_server" => "no"}
           }
 			  end
     end

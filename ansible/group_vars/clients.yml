@@ -1,5 +1,4 @@
-consul_master: "no"
-consul_join: "yes"
+consul_client: "yes"
 consul_server: "no"
 nomad_master: "no"
 nomad_server: "no"

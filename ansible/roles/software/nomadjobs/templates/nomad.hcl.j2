@@ -10,7 +10,6 @@ server {
     bootstrap_expect = {{ groups['servers'] | length }},
 }
 {{ nomadadvertise }}
-{{ nomadtelemetry }}
 {% endif %}
 {% else %}
 client {

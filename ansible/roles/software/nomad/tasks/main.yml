@@ -19,19 +19,3 @@
      dest:  /etc/nomad.d/nomad.hcl
   notify: restart nomad
 
-- name: Template alertmanager
-  template:
-    src: alertmanager.hcl.j2
-    dest:  /home/alertmanager.hcl
-
-- name: Template grafana
-  template:
-    src: grafana.hcl.j2
-    dest:  /home/grafana.hcl
-
-# - name: Template prometheus
-#   template:
-#     src: prometheus.hcl.j2
-#     dest:  /etc/nomad.d/prometheus.hcl
-
-
