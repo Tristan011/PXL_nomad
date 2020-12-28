@@ -1,0 +1,32 @@
+---
+# - name: Remove docker if installed from CentOS repo
+#   yum:
+#     name:
+#       - docker
+#       - docker-client
+#       - docker-client-latest
+#       - docker-common
+#       - docker-latest
+#       - docker-latest-logrotate
+#       - docker-logrotate
+#       - docker-engine
+#     state: removed
+
+- name: Add Docker GPG key.
+  rpm_key:
+    key: "{{ docker_yum_gpg_key }}"
+    state: present
+
+- name: Add Docker repository.
+  get_url:
+    url: "{{ docker_yum_repo_url }}"
+    dest: '/etc/yum.repos.d/docker-ce.repo'
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install Docker.
+  package:
+    name: "{{ docker_package }}"
+    state: "{{ docker_package_state }}"
+  notify: restart docker

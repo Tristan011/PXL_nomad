@@ -1,0 +1,20 @@
+# Full configuration options can be found at https://www.nomadproject.io/docs/configuration
+
+data_dir = "/opt/nomad/data"
+bind_addr = "0.0.0.0"
+
+{% if nomad_server == "yes" %}
+server {
+    enabled = true,
+{% if nomad_master == "yes" %}
+    bootstrap_expect = {{ groups['servers'] | length }},
+}
+{{ nomadadvertise }}
+{% endif %}
+{% else %}
+client {
+    enabled = true,
+    servers = [ "192.168.1.4" ],
+    network_interface = "eth1",
+}
+{% endif %}

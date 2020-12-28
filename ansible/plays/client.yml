@@ -1,9 +1,0 @@
----
-- name: playbook for client vm
-  hosts: clients
-  become: yes
-
-  roles:
-    - role: software/client/docker
-    - role: software/client/consulclient
-    - role: software/client/nomadclient

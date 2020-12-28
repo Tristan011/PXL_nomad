@@ -1,0 +1,21 @@
+---
+- name: Add consul repository.
+  get_url:
+    url: "{{ consul_yum_repo_url }}"
+    dest: '/etc/yum.repos.d/consul-ce.repo'
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install consul.
+  package:
+    name: "{{ consul_package }}"
+    state: "{{ consul_package_state }}"
+  notify: enable consul
+
+- name: Template consul.hcl
+  template:
+    src: consul.hcl.j2
+    dest: /etc/consul.d/consul.hcl
+
+    

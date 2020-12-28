@@ -1,0 +1,23 @@
+---
+nomad_package: "nomad"
+nomad_package_state: present
+
+nomad_service_state: started
+nomad_service_enabled: true
+
+nomad_yum_repo_url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo # https://rpm.releases.hashicorp.com/$release/hashicorp.repo (Where $release is “RHEL”, “AmazonLinux”, or “fedora”)
+#nomad_yum_gpg_key: https://download.nomad.com/linux/centos/gpg
+
+
+# Variables to replace in configuratie files
+
+nomadadvertise: |-
+      advertise {
+        http = "192.168.1.4"
+        rpc = "192.168.1.4"
+        serf = "192.168.1.4"
+      }
+
+
+#nomad_bindaddreplace: bind_addr = "0.0.0.0" 
+#nomad_bindaddr: !unsafe bind_addr = "{{ GetInterfaceIP \"eth1\" }}"
