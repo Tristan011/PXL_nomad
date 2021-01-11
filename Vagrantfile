@@ -12,7 +12,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define :server do |server|
     server.vm.hostname = "server"
     server.vm.network "private_network", ip: "192.168.1.4", virtualbox_intnet:"mynetwork"
-    server.vm.network "forwarded_port", guest: 8500, host: 80 # https://www.vagrantup.com/docs/networking/basic_usage
+    server.vm.network "forwarded_port", guest: 8500, host: 8500 
     server.vm.network "forwarded_port", guest: 4646, host: 4646
     server.vm.network "forwarded_port", guest: 9090, host: 9090
 
@@ -31,7 +31,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
  end
     (1..2).each do |i|
-		    config.vm.define "client#{i}" do |client|
+        config.vm.define "client#{i}" do |client|
 			    client.vm.hostname = "client#{i}"
 			    client.vm.network "private_network", ip: "192.168.1.#{i+4}", virtualbox_intnet:"mynetwork"
 			    client.vm.provision "ansible" do |ansible|
@@ -41,6 +41,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             "clients" => ["client#{i}"],	
             "clients:vars" => {"consul_client" => "yes", "consul_server"=> "no", "nomad_master" => "no", "nomad_server" => "no"}
           }
+          client.vm.provider "virtualbox" do |pmv|
+            pmv.memory = 2096
+            pmv.cpus = 2
+          end
 			  end
     end
   end

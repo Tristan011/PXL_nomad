@@ -11,7 +11,7 @@ job "alertmanager" {
       mode = "fail"
     }
     ephemeral_disk {
-      size = 300
+      size = 200
     }
 
     task "alertmanager" {
@@ -43,4 +43,3 @@ job "alertmanager" {
     }
   }
 }
-# https://learn.hashicorp.com/tutorials/nomad/prometheus-metrics

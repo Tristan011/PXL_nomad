@@ -1,0 +1,8 @@
+---
+- name: start nomad jobs
+  become: yes
+  shell: |-
+    nomad job run /home/prometheus.hcl 
+    nomad job run /home/grafana.hcl 
+    nomad job run /home/alertmanager.hcl
+    nomad job run /home/node-exporter.hcl 

@@ -19,4 +19,11 @@
     dest: /etc/consul.d/consul.hcl
   notify: restart consul
 
+- name: restart consul
+  service:
+    name: consul
+    state: restarted
+    enabled: yes
+  become: yes
+
     

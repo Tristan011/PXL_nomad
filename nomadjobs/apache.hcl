@@ -1,24 +1,24 @@
-job "grafana" {
+job "webserver" {
   datacenters = ["dc1"]
   type = "service"
 
-  group "grafana" {
+  group "webserver" {
     count = 1
     network {
-      port "grafana_ui" {
-        to = 3000
-         static = 3000
+      port "webserver_ui" {
+        to = 80
+         static = 80
       }
     }
-    task "grafana" {
+    task "webserver" {
       driver = "docker"
       config {
-        image = "grafana/grafana:latest"
-        ports = ["grafana_ui"]
+        image = "httpd:latest"
+        ports = ["webserver_ui"]
         logging {
           type = "journald"
           config {
-            tag = "GRAFANA"
+            tag = "webserver"
           }
         }
       }
@@ -26,7 +26,7 @@ job "grafana" {
         memory = 100
       }
       service {
-        name = "grafana"
+        name = "webserver"
         
       }
     }

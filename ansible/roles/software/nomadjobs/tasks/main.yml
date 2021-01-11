@@ -6,6 +6,7 @@
     owner: root
     group: wheel
     mode: 0644
+  notify: start nomad jobs
 
 - name: Copy alaertmanager.hcl
   copy:
@@ -14,6 +15,7 @@
     owner: root
     group: wheel
     mode: 0644
+  notify: start nomad jobs
 
 - name: Copy prometheus.hcl
   copy:
@@ -22,20 +24,32 @@
     owner: root
     group: wheel
     mode: 0644
+  notify: start nomad jobs
 
-- name: Copy tomcat.hcl
+- name: Copy node-exporter.hcl
   copy:
-    src: templates/tomcat.hcl.j2
-    dest: /home/tomcat.hcl
+    src: templates/node-exporter.hcl.j2
+    dest: /home/node-exporter.hcl
     owner: root
     group: wheel
     mode: 0644
+  notify: start nomad jobs
 
-# nomad job run /home/tomcat.hcl
-- name: start nomad jobs 
-  shell: |-
-    nomad job run /home/prometheus.hcl 
-    nomad job run /home/grafana.hcl
-    nomad job run /home/alertmanager.hcl
+- name: Copy apache.hcl
+  copy:
+    src: templates/apache.hcl.j2
+    dest: /home/apache.hcl
+    owner: root
+    group: wheel
+    mode: 0644
+  notify: start nomad jobs
+
+# - name: start nomad jobs 
+#   become: yes
+#   shell: |-
+#     nomad job run /home/prometheus.hcl 
+#     nomad job run /home/grafana.hcl
+#     nomad job run /home/alertmanager.hcl
+#     nomad job run /home/node-exporter.hcl
 
 
