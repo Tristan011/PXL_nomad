@@ -400,11 +400,11 @@ job "webserver" {
   }
 }
 ```
-<h2> Verdeling van de taken <h2>
+<h2> Verdeling van de taken </h2>
 
 Alles samen gemaakt.
 
-<h2> Bronnen <h2>
+<h2> Bronnen </h2>
 https://docs.docker.com/engine/install/centos/  
 https://www.nomadproject.io/docs/install  
 https://learn.hashicorp.com/tutorials/consul/get-started-install  
